@@ -1,0 +1,86 @@
+[
+    {
+      "id": 1,
+      "chat_id": 1,
+      "sender_id": 1,
+      "recipient_id": 2,
+      "message": "Hey! Buddy and Bella should meet up for a playdate!",
+      "sent_at": "2024-08-20T12:30:00"
+    },
+    {
+      "id": 2,
+      "chat_id": 1,
+      "sender_id": 2,
+      "recipient_id": 1,
+      "message": "That sounds great! Let's plan something for this weekend.",
+      "sent_at": "2024-08-20T12:32:00"
+    },
+    {
+      "id": 3,
+      "chat_id": 2,
+      "sender_id": 3,
+      "recipient_id": 6,
+      "message": "Hey Daisy and Max would get along great!",
+      "sent_at": "2024-08-20T14:45:00"
+    },
+    {
+      "id": 4,
+      "chat_id": 2,
+      "sender_id": 6,
+      "recipient_id": 3,
+      "message": "Definitely! Let's set up a playdate.",
+      "sent_at": "2024-08-20T14:50:00"
+    },
+    {
+        "id": 5,
+        "chat_id": 3,
+        "sender_id": 5,
+        "recipient_id": 8,
+        "message": "Charlie and Molly could be best buds!",
+        "sent_at": "2024-08-20T17:00:00"
+    },
+    {
+        "id": 6,
+        "chat_id": 3,
+        "sender_id": 8,
+        "recipient_id": 5,
+        "message": "Yes! They're both so playful.",
+        "sent_at": "2024-08-20T17:10:00"
+    },
+    {
+        "id": 7,
+        "chat_id": 5,
+        "sender_id": 7,
+        "recipient_id": 10,
+        "message": "Cooper and Luna need to meet!",
+        "sent_at": "2024-08-20T19:30:00"
+    },
+    {
+        "id": 8,
+        "chat_id": 5,
+        "sender_id": 10,
+        "recipient_id": 7,
+        "message": "For sure! They could play in the snow together.",
+        "sent_at": "2024-08-20T19:35:00"
+    },
+    {
+        "id": 9,
+        "chat_id": 4,
+        "sender_id": 4,
+        "recipient_id": 9,
+        "message": "Lucy and Rocky would have so much fun running together!",
+        "sent_at": "2024-08-20T15:15:00"
+    },
+    {
+        "id": 10,
+        "chat_id": 4,
+        "sender_id": 9,
+        "recipient_id": 4,
+        "message": "Totally agree! Let's get them together soon.",
+        "sent_at": "2024-08-20T15:20:00"
+    }
+]
+      
+  
+  
+  

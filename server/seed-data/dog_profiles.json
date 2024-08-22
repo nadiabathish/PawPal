@@ -1,0 +1,113 @@
+[
+    {
+    "id": 1,
+    "dog_name": "Buddy",
+    "dog_age": 3,
+    "dog_breed": "Affenpinscher",
+    "play_styles": ["Fetch", "Running"],
+    "profile_pictures": ["https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg"],
+    "owner_id": 1,
+    "created_at": "2024-08-20T12:00:00",
+    "updated_at": "2024-08-20T12:00:00"
+    },
+    {
+    "id": 2,
+    "dog_name": "Bella",
+    "dog_age": 2,
+    "dog_breed": "Bull Terrier",
+    "play_styles": ["Chase", "Wrestling"],
+    "profile_pictures": ["https://cdn2.thedogapi.com/images/VSraIEQGd.jpg"],
+    "owner_id": 2,
+    "created_at": "2024-08-20T13:00:00",
+    "updated_at": "2024-08-20T13:00:00"
+    },
+    {
+    "id": 3,
+    "dog_name": "Max",
+    "dog_age": 4,
+    "dog_breed": "American Bulldog",
+    "play_styles": ["Wrestling", "Tug-of-War"],
+    "profile_pictures": ["https://cdn2.thedogapi.com/images/pk1AAdloG.jpg"],
+    "owner_id": 3,
+    "created_at": "2024-08-20T14:00:00",
+    "updated_at": "2024-08-20T14:00:00"
+    },
+    {
+    "id": 4,
+    "dog_name": "Lucy",
+    "dog_age": 5,
+    "dog_breed": "Yorkshire Terrier",
+    "play_styles": ["Chase", "Running"],
+    "profile_pictures": ["https://cdn2.thedogapi.com/images/B12BnxcVQ.jpg"],
+    "owner_id": 4,
+    "created_at": "2024-08-20T15:00:00",
+    "updated_at": "2024-08-20T15:00:00"
+    },
+    {
+    "id": 5,
+    "dog_name": "Charlie",
+    "dog_age": 3,
+    "dog_breed": "Vizsla",
+    "play_styles": ["Swimming", "Running"],
+    "profile_pictures": ["https://cdn2.thedogapi.com/images/r1o0jx9Em.jpg"],
+    "owner_id": 5,
+    "created_at": "2024-08-20T16:00:00",
+    "updated_at": "2024-08-20T16:00:00"
+    },
+    {
+        "id": 6,
+        "dog_name": "Daisy",
+        "dog_age": 2,
+        "dog_breed": "Staffordshire Bull Terrier",
+        "play_styles": ["Wrestling", "Fetch"],
+        "profile_pictures": ["https://cdn2.thedogapi.com/images/H1zSie9V7.jpg"],
+        "owner_id": 6,
+        "created_at": "2024-08-20T17:00:00",
+        "updated_at": "2024-08-20T17:00:00"
+    },
+    {
+        "id": 7,
+        "dog_name": "Cooper",
+        "dog_age": 3,
+        "dog_breed": "Samoyed",
+        "play_styles": ["Fetch", "Chase"],
+        "profile_pictures": ["https://cdn2.thedogapi.com/images/S1T8Ee9Nm.jpg"],
+        "owner_id": 7,
+        "created_at": "2024-08-20T18:00:00",
+        "updated_at": "2024-08-20T18:00:00"
+    },
+    {
+        "id": 8,
+        "dog_name": "Molly",
+        "dog_age": 1,
+        "dog_breed": "Saint Bernard",
+        "play_styles": ["Quiet Play", "Tug-of-War"],
+        "profile_pictures": ["https://cdn2.thedogapi.com/images/_Qf9nfRzL.png"],
+        "owner_id": 8,
+        "created_at": "2024-08-20T19:00:00",
+        "updated_at": "2024-08-20T19:00:00"
+    },
+    {
+        "id": 9,
+        "dog_name": "Rocky",
+        "dog_age": 4,
+        "dog_breed": "Basset Hound",
+        "play_styles": ["Swimming", "Fetch"],
+        "profile_pictures": ["https://cdn2.thedogapi.com/images/Sy57xx9EX.jpg"],
+        "owner_id": 9,
+        "created_at": "2024-08-20T20:00:00",
+        "updated_at": "2024-08-20T20:00:00"
+    },
+    {
+        "id": 10,
+        "dog_name": "Party Time",
+        "dog_age": 2,
+        "dog_breed": "Poodle (Toy)",
+        "play_styles": ["Chase", "Wrestling"],
+        "profile_pictures": ["https://cdn2.thedogapi.com/images/rJFJVxc4m.jpg"],
+        "owner_id": 10,
+        "created_at": "2024-08-20T21:00:00",
+        "updated_at": "2024-08-20T21:00:00"
+    }
+]
+  

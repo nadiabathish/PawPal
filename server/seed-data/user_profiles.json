@@ -1,0 +1,83 @@
+[
+    {
+      "id": 1,
+      "name": "Nadia",
+      "email": "n.bathish@hotmail.com",
+      "password": "password123",
+      "created_at": "2024-08-20T12:00:00",
+      "updated_at": "2024-08-20T12:00:00"
+    },
+    {
+      "id": 2,
+      "name": "Helen",
+      "email": "puppyfan@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T13:00:00",
+      "updated_at": "2024-08-20T13:00:00"
+    },
+    {
+      "id": 3,
+      "name": "Jimmy",
+      "email": "goodboyowner@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T14:00:00",
+      "updated_at": "2024-08-20T14:00:00"
+    },
+    {
+      "id": 4,
+      "name": "Parker",
+      "email": "barkpark@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T15:00:00",
+      "updated_at": "2024-08-20T15:00:00"
+    },
+    {
+      "id": 5,
+      "name": "Val",
+      "email": "pawsitivevibes@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T16:00:00",
+      "updated_at": "2024-08-20T16:00:00"
+    },
+    {
+      "id": 6,
+      "name": "Wanda",
+      "email": "woofwanderer@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T17:00:00",
+      "updated_at": "2024-08-20T17:00:00"
+    },
+    {
+      "id": 7,
+      "name": "Frankie",
+      "email": "fetchfanatic@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T18:00:00",
+      "updated_at": "2024-08-20T18:00:00"
+    },
+    {
+      "id": 8,
+      "name": "Patty",
+      "email": "poodleparty@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T19:00:00",
+      "updated_at": "2024-08-20T19:00:00"
+    },
+    {
+      "id": 9,
+      "name": "Wayne",
+      "email": "tailwagger@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T20:00:00",
+      "updated_at": "2024-08-20T20:00:00"
+    },
+    {
+      "id": 10,
+      "name": "John",
+      "email": "doggiediva@example.com",
+      "password": "password123",
+      "created_at": "2024-08-20T21:00:00",
+      "updated_at": "2024-08-20T21:00:00"
+    }
+  ]
+  

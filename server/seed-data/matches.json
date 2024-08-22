@@ -1,0 +1,44 @@
+[
+    {
+      "id": 1,
+      "user1_id": 1,
+      "user2_id": 2,
+      "status": "matched",
+      "created_at": "2024-08-20T12:15:00",
+      "updated_at": "2024-08-20T12:15:00"
+    },
+    {
+        "id": 2,
+        "user1_id": 3,
+        "user2_id": 6,
+        "status": "matched",
+        "created_at": "2024-08-20T14:30:00",
+        "updated_at": "2024-08-20T14:30:00"
+    },
+    {
+        "id": 3,
+        "user1_id": 5,
+        "user2_id": 8,
+        "status": "matched",
+        "created_at": "2024-08-20T16:45:00",
+        "updated_at": "2024-08-20T16:45:00"
+    },
+    {
+        "id": 4,
+        "user1_id": 4,
+        "user2_id": 9,
+        "status": "pending",
+        "created_at": "2024-08-20T15:00:00",
+        "updated_at": "2024-08-20T15:00:00"
+    },
+    {
+        "id": 5,
+        "user1_id": 7,
+        "user2_id": 10,
+        "status": "matched",
+        "created_at": "2024-08-20T19:15:00",
+        "updated_at": "2024-08-20T19:15:00"
+    }
+]
+      
+  
