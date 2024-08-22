@@ -1,0 +1,39 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/reset' as *;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5rem;
+
+    &__logo--image {
+        width: 10rem;
+    }
+
+    &__nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+
+        button {
+            font-family: $font-primary;
+            font-size: 1.5rem;
+            font-weight: 500;
+            width: 100%;
+            background: none;
+            color: $pawpal-black;
+            cursor: pointer;
+            border: none;
+            min-height: 2.25rem;
+            margin: 0 0.5rem;
+            white-space: nowrap;
+
+            &.header__nav--active {
+                font-weight: 800;
+            }
+        }
+    }
+
+}

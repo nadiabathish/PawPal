@@ -1,0 +1,75 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/reset' as *;
+
+.login {
+    // display: flex;
+    // // align-items: center;
+    // justify-content: center;
+    // padding: 1rem 5rem 0;
+    // width: 100%;
+
+    &__title {
+        // width: 10rem;
+        text-align: center;
+        color: $pawpal-black;
+        margin-bottom: 2rem;
+
+    }
+
+    // &__form {
+    //     width: 37.5rem;
+    //     padding: 2rem;
+    //     background-color: $pawpal-light-green;
+    //     border-radius: 10px;
+    //     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    // }
+
+    &__form-field {
+        margin-bottom: 1.5rem;
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 2px solid $pawpal-grey;
+            border-radius: 10px;
+        }
+    }
+
+    &__button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.5rem;
+        background-color: $pawpal-yellow;
+        color: $pawpal-black;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            background-color: lighten($pawpal-yellow, 10%);
+        }
+    }
+
+    &__forgot-password {
+        text-align: center;
+        margin-top: 1rem;
+
+        &--link {
+            color: $pawpal-black;
+            text-decoration: underline;
+
+            &:hover {
+                color: $pawpal-grey;
+            }
+        }
+    }
+}

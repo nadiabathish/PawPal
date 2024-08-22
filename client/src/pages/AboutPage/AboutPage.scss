@@ -1,0 +1,60 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/reset' as *;
+
+.about-page {
+    background: $pawpal-white;
+    @include full-page-layout;
+}
+
+.about {
+    display: flex;
+
+    &__intro {
+        display: flex;
+        flex-direction: column;
+        // justify-content: space-evenly;
+        width: 60%;
+        margin-right: 3rem;
+
+        &--title {
+            font-size: 3rem;
+            color: $pawpal-black;
+            font-family: $font-primary;
+            padding-bottom: 1.25rem;
+        }
+
+        &--text {
+            font-size: 1rem;
+            color: $pawpal-black;
+            font-family: $font-primary;
+            padding-bottom: 1rem;
+
+            b {
+                color: $pawpal-purple;
+                font-size: 1.25rem;
+            }
+        }
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+
+        &--section-title {
+            font-size: 1.5rem;
+            color: $pawpal-purple;
+            font-family: $font-primary;
+            border-top: solid 0.1125rem $pawpal-black;
+            border-bottom: solid 0.1125rem $pawpal-black;
+            padding: 0.25rem 0;
+        }
+
+        &--section-text {
+            font-size: 1rem;
+            color: $pawpal-black;
+            font-family: $font-primary;
+            padding: 1rem 0;
+        }
+    }
+}

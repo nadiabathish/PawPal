@@ -1,0 +1,99 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/reset' as *;
+
+.profile-page {
+    background-color: $pawpal-white;
+    @include full-page-layout;
+
+    &__header {
+        padding: 2rem 5rem;
+        background-color: $pawpal-light-purple;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    &__owner-name {
+        font-size: 2.5rem;
+        color: $pawpal-black;
+        font-family: $font-primary;
+        margin-bottom: 1rem;
+    }
+
+    &__dog-profile-intro {
+        font-size: 1.25rem;
+        color: $pawpal-black;
+    }
+
+    &__dog-profile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+
+    &__dog-name {
+        font-size: 2.5rem;
+        color: $pawpal-purple;
+        font-family: $font-primary;
+        margin-bottom: 1.5rem;
+    }
+
+    &__dog-description {
+        display: flex;
+        gap: 1rem;
+    }
+
+    &__dog-detail {
+        font-size: 1rem;
+        color: $pawpal-black;
+        font-family: $font-primary;
+    }
+
+    &__dog-picture {
+        height: 12rem;
+        width: 12rem;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+
+    &__nav {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        &-item {
+            background-color: $pawpal-grey;
+            color: $pawpal-black;
+            border: none;
+            border-radius: 10px;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+            &--active {
+                background-color: $pawpal-yellow;
+            }
+
+            &:hover {
+                background-color: lighten($pawpal-grey, 10%);
+            }
+        }
+    }
+
+    &__content {
+        padding: 2rem 5rem;
+        background-color: $pawpal-white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+}
