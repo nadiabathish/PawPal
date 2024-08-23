@@ -6,46 +6,52 @@ import './SignUpForm.scss';
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function SignUpForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [dogName, setDogName] = useState('');
-    const [ownersName, setOwnersName] = useState('');
-    const [dogAge, setDogAge] = useState('');
-    const [dogBreed, setDogBreed] = useState('');
-    const [playStyles, setPlayStyles] = useState([]);
-    const [prompt, setPrompt] = useState('');
-    const [promptAnswer, setPromptAnswer] = useState('');
-    const [images, setImages] = useState([]);
-    const [errorMessage, setErrorMessage] = useState('');
-    const navigate = useNavigate();
+    // State hooks to manage the form inputs for user information and dog profile data
+    const [email, setEmail] = useState('');           // State to store the email input
+    const [password, setPassword] = useState('');     // State to store the password input
+    const [dogName, setDogName] = useState('');       // State to store the dog's name input
+    const [ownersName, setOwnersName] = useState(''); // State to store the owner's name input
+    const [dogAge, setDogAge] = useState('');         // State to store the dog's age input
+    const [dogBreed, setDogBreed] = useState('');     // State to store the dog's breed input
+    const [playStyles, setPlayStyles] = useState([]); // State to store selected play styles (as an array)
+    const [errorMessage, setErrorMessage] = useState(''); // State to store error messages
+    const navigate = useNavigate(); // Hook to programmatically navigate to different routes
 
-    const handlePlayStyleChange = (event) => {
-        const { value, checked } = event.target;
-        if (checked) {
-            setPlayStyles([...playStyles, value]);
-        } else {
-            setPlayStyles(playStyles.filter((style) => style !== value));
-        }
+    // Event handler to update the playStyles array when a checkbox is checked/unchecked
+    const handlePlayStyleChange = (e) => {
+        const { value, checked } = e.target;
+        // If checked, add the selected play style to the array; otherwise, remove it from the array
+        setPlayStyles((prevPlayStyles) =>
+            checked ? [...prevPlayStyles, value] : prevPlayStyles.filter((style) => style !== value)
+        );
     };
 
+    // Event handler for the form submission
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = {
-            email,
-            password,
-            owner_name: ownersName,
-            dog_name: dogName,
-            dog_age: dogAge,
-            dog_breed: dogBreed,
-            play_styles: playStyles
-        };
+        event.preventDefault(); // Prevent the default form submission behavior
+
         try {
-            const response = await axios.post(`${API_BASE_URL}/auth/signup`, data);
-            alert('User registered successfully!');
-            navigate('/authentication');
+            // Send a POST request to the signup API endpoint with user and dog profile data
+            const response = await axios.post(`${API_BASE_URL}/auth/signup`, {
+                email,
+                password,
+                name: ownersName, // Sending the user's name as 'name'
+                dog_name: dogName,
+                dog_age: dogAge,
+                dog_breed: dogBreed,
+                play_styles: playStyles, // Sending the array of selected play styles
+            });
+
+            // Extract the token from the response and save it in localStorage
+            const { token } = response.data;
+            localStorage.setItem('authToken', token);
+
+            // Navigate to the profile page after successful signup
+            navigate('/profile');
         } catch (error) {
-            console.error('Error registering user', error);
-            alert('Failed to register');
+            // Handle errors, log them, and display an error message to the user
+            console.error("Error signing up:", error);
+            setErrorMessage("Failed to sign up. Please try again.");
         }
     };
 
@@ -176,64 +182,8 @@ function SignUpForm() {
                     
                     </div>
                 </div>
-                {/* <div className="sign-up__field">
-                    <label htmlFor="prompt">Pick a Fun Question:</label>
-                    <select 
-                        id="prompt" 
-                        value={prompt} 
-                        onChange={(e) => setPrompt(e.target.value)} 
-                        required
-                    >
-                        <option value="">Choose a fun prompt</option>
-                        <option value="favorite_toy">What toy makes your doggo's tail wag the most?</option>
-                        <option value="favorite_activity">What’s your pup’s favorite pastime (besides belly rubs)?</option>
-                        <option value="funniest_moment">Tell us the funniest thing your dog has ever done!</option>
-                    </select>
-                </div>
-                <div className="sign-up__field">
-                    <label htmlFor="promptAnswer">Spill the Beans! (Answer the Prompt)</label>
-                    <textarea 
-                        id="promptAnswer" 
-                        value={promptAnswer} 
-                        onChange={(e) => setPromptAnswer(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div className="sign-up__field">
-                    <label htmlFor="images">Upload Some Pawesome Pics (up to 4):</label>
-                    <input 
-                        type="file" 
-                        id="images" 
-                        accept="image/*" 
-                        multiple 
-                        onChange={handleImageUpload} 
-                        required
-                        style={{ display: 'none' }}
-                    />
-                </div>
-                <div className="sign-up__image-previews">
-                    {images.map((image, index) => (
-                        <div
-                            className="sign-up__image-preview"
-                            key={index}
-                            style={{ backgroundImage: `url(${image})` }}
-                        >
-                            <img src={image} alt={`Upload Preview ${index + 1}`} />
-                        </div>
-                    ))}
-
-
-                    {images.length < 4 && Array.from({ length: 4 - images.length }).map((_, index) => (
-                        <div
-                            key={index}
-                            className="sign-up__image-preview sign-up__image-preview--empty"
-                            onClick={handlePlaceholderClick}
-                        >
-                            +
-                        </div>
-                    ))}
-                </div> */}
                 <button type="submit" className="sign-up__submit">Create My Pup's Profile</button>
+                {errorMessage && <p className="sign-up__error">{errorMessage}</p>}
             </form>
         </div>
     );
