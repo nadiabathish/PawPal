@@ -10,53 +10,63 @@ import Notifications from '../../components/Notifications/Notifications';
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function ProfilePage() {
-  const { userId: paramUserId } = useParams();
-  const [activeSection, setActiveSection] = useState('palFinder');
-  const [profileData, setProfileData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState('palFinder');  // State to manage the active section of the profile page  
+  const [profileData, setProfileData] = useState(null);  // State to store the user's profile data once it's fetched
+  const [loading, setLoading] = useState(true);  // State to track the loading state while the profile data is being fetched 
+  const [error, setError] = useState(null);  // State to store any error messages encountered during data fetching
+  const navigate = useNavigate();  // Hook to programmatically navigate to other routes
 
   useEffect(() => {
-    const userId = paramUserId || localStorage.getItem('userId');
+    const userId = localStorage.getItem('userId'); // Retrieve the userId from localStorage (previously saved during authentication)
     
+    // If no userId is found, set an error, redirect to authentication, and stop execution
     if (!userId) {
-      console.error("No userId found in URL or localStorage");
+      console.error("No userId found in localStorage");
       setError("User not authenticated");
       navigate('/authentication'); 
       return;
     }
-
+  
+    // Function to fetch the user's profile data from the API
     const fetchProfileData = async () => {
       try {
+        // Get the authentication token from localStorage
         const token = localStorage.getItem('authToken');
+
+        // Make an authenticated GET request to the profile API endpoint
         const response = await axios.get(`${API_BASE_URL}/profiles/profile/${userId}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,  // Pass the JWT token in the Authorization header
           },
         });
+
+        // Set the fetched profile data into state and mark loading as complete
         setProfileData(response.data);
         setLoading(false);  
       } catch (err) {
+        // If an error occurs during the API call, log it and set the error state
         console.error('Error fetching profile data:', err);
         setError('Failed to load profile data');
         setLoading(false); 
       }
     };
 
-    fetchProfileData();
-  }, [paramUserId, navigate]);
-
+    fetchProfileData(); // Trigger the profile data fetching function on component mount
+  }, [navigate]); // Dependency array ensures this effect runs on initial render or when 'navigate' changes
+ 
+  // If the data is still loading, display a loading message
   if (loading) {
     return <p>Loading...</p>;
   }
 
+  // If there was an error, display the error message
   if (error) {
     return <p>{error}</p>;
   }
 
+  // If no profile data was fetched, display a fallback message
   if (!profileData) {
-    return <p>No profile data found</p>;
+    return <p>No profile data available</p>;
   }
 
   return (
@@ -75,10 +85,7 @@ function ProfilePage() {
               <p className="profile-page__dog-detail"><b>Age:</b> {profileData.dog_age} years old</p>
               <p className="profile-page__dog-detail"><b>Play Styles:</b> {profileData.play_styles.join(', ')}</p>
             </div>
-          
         </div>
-
-        
       </div>
 
       <div className="profile-page__nav">
@@ -106,7 +113,6 @@ function ProfilePage() {
         >
           Profile Settings
         </button>
-        
       </div>
 
       <div className="profile-page__content">
