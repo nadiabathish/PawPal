@@ -1,6 +1,6 @@
 import './Header.scss';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import fullLogo from '../../assets/logos/pawpal-logo-full.svg';
 import axios from 'axios';
 
@@ -37,15 +37,16 @@ function Header() {
         } else if (path.startsWith('/profile')) {
           setActive("profile");
         }
-    }, [location.pathname]);
+    }, [location.pathname, isLoggedIn]);  // isLoggedIn added as a dependency
 
-    const handleNavigation = (path, state) => {
+    const handleNavigation = useCallback((path, state) => {
         setActive(state);
         navigate(path);
-    };
+    }, [navigate]);
+
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('authToken');
         setIsLoggedIn(false);
         setActive("home");
         navigate("/");
@@ -54,17 +55,17 @@ function Header() {
     const getHeaderBackground = () => {
         switch (active) {
             case "home":
+            case "profile":
                 return "#f6d46b"; // pawpal-yellow
             case "about":
                 return "#d4c2ef"; // pawpal-light-purple
             case "authentication":
                 return "#f5f7ee"; // pawpal-light-green
-            case "profile":
-                return "#f6d46b"; // pawpal-yellow
             default:
                 return "#f6d46b"; // pawpal-yellow
         }
     };
+
 
     return (
         <header className='header' style={{ backgroundColor: getHeaderBackground() }}>
@@ -113,7 +114,7 @@ function Header() {
                 )}
             </div>
         </header>
-    );
+    )
 }
 
 export default Header
