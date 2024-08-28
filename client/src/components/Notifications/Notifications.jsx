@@ -89,8 +89,8 @@ function Notifications() {
   }
 
   return (
-    <div>
-      <h2>Notifications</h2>
+    <div className="notifications">
+      <h2 className="notifications__title">Notifications</h2>
       {notifications.length > 0 ? (
         notifications.map((notif, index) => (
           <div key={`${notif.match_id}-${index}`} className="notification">
@@ -99,17 +99,30 @@ function Notifications() {
               alt={`${notif.dog_name}'s profile`} 
               className="notification__image"
             />
-            <p>{notif.dog_name} ({notif.dog_breed}) liked your dog profile.</p>
+            <p className="notification__text">
+              {notif.dog_name} ({notif.dog_breed}) liked your dog profile.
+            </p>
             <div className="notification__actions">
-              <button onClick={() => handleLike(notif.match_id, notif.dog_id)}>Like</button>
-              <button onClick={() => handlePass(notif.match_id, notif.dog_id)}>Pass</button>
+              <button 
+                className="notification__button notification__button--like" 
+                onClick={() => handleLike(notif.match_id, notif.dog_id)}
+              >
+                Like
+              </button>
+              <button 
+                className="notification__button notification__button--pass" 
+                onClick={() => handlePass(notif.match_id, notif.dog_id)}
+              >
+                Pass
+              </button>
             </div>
           </div>
         ))
       ) : (
-        <p>No new notifications</p>
+        <p className="notifications__empty">No new notifications</p>
       )}
-    </div>
+  </div>
+
   )
 }
 

@@ -1,3 +1,84 @@
 @use '../../styles/partials/mixins' as *;
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/reset' as *;
+
+.notifications {
+  padding: 2rem 5rem;
+  background-color: $pawpal-white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+    color: $pawpal-black;
+    margin-bottom: 2rem;
+    font-family: $font-primary;
+  }
+
+  &__empty {
+    text-align: center;
+    color: $pawpal-grey;
+    font-size: 1.25rem;
+    font-family: $font-primary;
+  }
+
+  .notification {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid $pawpal-grey;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &__image {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    &__text {
+      flex: 1;
+      font-size: 1.25rem;
+      color: $pawpal-black;
+      font-family: $font-primary;
+    }
+
+    &__actions {
+      display: flex;
+      gap: 1rem;
+
+      .notification__button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: $font-primary;
+
+        &--like {
+          background-color: $pawpal-yellow;
+          color: $pawpal-black;
+
+          &:hover {
+            background-color: darken($pawpal-yellow, 10%);
+          }
+        }
+
+        &--pass {
+          background-color: $pawpal-grey;
+          color: $pawpal-black;
+
+          &:hover {
+            background-color: darken($pawpal-grey, 10%);
+          }
+        }
+      }
+    }
+  }
+}
