@@ -5,6 +5,7 @@
 .profile-page {
     background-color: $pawpal-white;
     @include full-page-layout;
+    margin-bottom: 4rem;
 
     &__header {
         padding: 2rem 5rem;
