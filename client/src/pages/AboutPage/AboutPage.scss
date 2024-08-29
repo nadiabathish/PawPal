@@ -13,8 +13,6 @@
     &__intro {
         display: flex;
         flex-direction: column;
-        // justify-content: space-evenly;
-        width: 60%;
         margin-right: 3rem;
 
         &--title {
@@ -25,7 +23,7 @@
         }
 
         &--text {
-            font-size: 1rem;
+            font-size: 1.5rem;
             color: $pawpal-black;
             font-family: $font-primary;
             padding-bottom: 1rem;
@@ -51,7 +49,7 @@
         }
 
         &--section-text {
-            font-size: 1rem;
+            font-size: 1.5rem;
             color: $pawpal-black;
             font-family: $font-primary;
             padding: 1rem 0;
