@@ -1,119 +1,142 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './Chat.scss';
 
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+const WS_URL = import.meta.env.VITE_WS_URL;
 
 function Chat() {
-    // State hooks to manage users, messages, new message input, and the current recipient ID
-    const [users, setUsers] = useState([]);                  // State to store the list of users (matches)
-    const [messages, setMessages] = useState([]);             // State to store the chat messages
-    const [newMessage, setNewMessage] = useState('');         // State to store the content of the new message being typed
-    const [currentRecipientId, setCurrentRecipientId] = useState(null);  // State to store the ID of the current recipient user
-    const userId = localStorage.getItem('userId');            // Retrieve the current user's ID from localStorage
-  
-    // useEffect to fetch matched users (playmates) when the component mounts
-    useEffect(() => {
-      const fetchUsers = async () => {
-        try {
-          // Retrieve the JWT token from localStorage for authentication
-          const token = localStorage.getItem('authToken');
-  
-          // Make a GET request to fetch the matched users for the current user
-          const response = await axios.get(`${API_BASE_URL}/playmates/matches/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,  // Pass the JWT token in the Authorization header
-            },
-          });
-  
-          // Store the matched users in state
-          setUsers(response.data);
-        } catch (error) {
-          // Handle any errors, log them
-          console.error('Error fetching users:', error);
-        }
+  const [users, setUsers] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [currentRecipientId, setCurrentRecipientId] = useState(null);
+  const userId = Number(localStorage.getItem('userId')); // Convert userId to a number
+  const ws = useRef(null);
+  const wsInitialized = useRef(false);
+  const [currentChatId, setCurrentChatId] = useState(null);
+
+  useEffect(() => {
+    if (wsInitialized.current) return;
+
+    const connectWebSocket = () => {
+      ws.current = new WebSocket(WS_URL);
+
+      ws.current.onopen = () => {
+        console.log('WebSocket connected');
       };
-  
-      // Call the fetchUsers function when the component mounts
-      fetchUsers();
-    }, [userId]);  // Dependency array ensures this effect runs when the userId changes
-  
-    // useEffect to fetch messages when the current recipient changes
-    useEffect(() => {
-      const fetchMessages = async () => {
-        if (!currentRecipientId) return;  // If no recipient is selected, return early
-        try {
-          // Retrieve the JWT token from localStorage for authentication
-          const token = localStorage.getItem('authToken');
-  
-          // Make a GET request to fetch messages between the current user and the selected recipient
-          const response = await axios.get(`${API_BASE_URL}/messages/${userId}/${currentRecipientId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,  // Pass the JWT token in the Authorization header
-            },
-          });
-  
-          // Store the fetched messages in state
-          setMessages(response.data);
-        } catch (error) {
-          // Handle any errors, log them
-          console.error('Error fetching messages:', error);
-        }
+
+      ws.current.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        console.log('Message received:', message);
+
+        // Update the messages state with the new message
+        setMessages((prevMessages) => [...prevMessages, message]);
       };
-  
-      // Call the fetchMessages function when the current recipient changes
-      fetchMessages();
-    }, [currentRecipientId, userId]);  // Dependency array ensures this effect runs when currentRecipientId or userId changes
-  
-    // Event handler to send a new message
-    const handleSendMessage = async () => {
-      if (!currentRecipientId) {
-        console.error('Recipient ID is not set.');
-        return;  // Return early if no recipient is selected
+
+      ws.current.onclose = () => {
+        console.log('Websocket disconnected');
+      };
+    };
+
+    setTimeout(connectWebSocket, 500);
+    wsInitialized.current = true;
+
+    return () => {
+      if (ws.current) {
+        ws.current.close();
       }
-  
+    };
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
       try {
-        // Retrieve the JWT token from localStorage for authentication
         const token = localStorage.getItem('authToken');
-  
-        // Send a POST request to the API to send the new message to the selected recipient
-        const response = await axios.post(`${API_BASE_URL}/messages`, {
-          recipientId: currentRecipientId,  // Send the recipient ID in the request
-          message: newMessage,  // Send the new message content
-        }, {
+        const response = await axios.get(`${API_BASE_URL}/playmates/matches/${userId}`, {
           headers: {
-            Authorization: `Bearer ${token}`,  // Pass the JWT token in the Authorization header
+            Authorization: `Bearer ${token}`,
           },
         });
-  
-        // Update the messages state by appending the newly sent message to the list
-        setMessages([...messages, {
-          id: response.data.id,           // Use the ID from the response
-          sender_id: userId,              // Set the sender ID to the current user
-          recipient_id: currentRecipientId,  // Set the recipient ID to the selected recipient
-          message: newMessage,            // Use the new message content
-          sent_at: new Date().toISOString(),  // Set the sent timestamp to the current time
-        }]);
-  
-        // Clear the new message input field after sending the message
-        setNewMessage('');
+        setUsers(response.data);
+        console.log('Users:', response.data);
       } catch (error) {
-        // Handle any errors, log them
-        console.error('Error sending message:', error);
+        console.error('Error fetching users:', error);
       }
     };
-  
-    // Helper function to get the sender's name based on the message data
-    const getSenderName = (message) => {
-      // If the sender is the current user, return 'You'
-      if (message.sender_id === userId) {
-        return 'You';
-      } else {
-        // Otherwise, find the sender in the users list and return their name
-        const sender = users.find(user => user.user_id === message.sender_id);
-        return sender ? sender.user_name : 'Other';  // Return the sender's name or 'Other' if not found
+    fetchUsers();
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (!currentRecipientId) return;
+      try {
+        const token = localStorage.getItem('authToken');
+        const response = await axios.get(`${API_BASE_URL}/messages/${userId}/${currentRecipientId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.data.chat_id) {
+          setCurrentChatId(response.data.chat_id);
+          setMessages(response.data.messages);
+          console.log('Messages:', response.data.messages);
+        } else {
+          console.error('No chat ID returned');
+        }
+      } catch (error) {
+        console.error('Error fetching messages:', error);
       }
     };
+    fetchMessages();
+  }, [currentRecipientId, userId]);
+
+  const handleSendMessage = async () => {
+    if (!currentRecipientId) {
+      console.error('Recipient ID is not set.');
+      return;  // Return early if no recipient is selected
+    }
+
+    try {
+      // Retrieve the JWT token from localStorage for authentication
+      const token = localStorage.getItem('authToken');
+
+      // Send a POST request to the API to send the new message to the selected recipient
+      const response = await axios.post(`${API_BASE_URL}/messages`, {
+        recipientId: currentRecipientId,  // Send the recipient ID in the request
+        message: newMessage,  // Send the new message content
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,  // Pass the JWT token in the Authorization header
+        },
+      });
+      // Send the new message through WebSocket to notify other users
+      ws.current.send(JSON.stringify({
+        id: response.data.id,
+        sender_id: userId,
+        recipient_id: currentRecipientId,
+        message: newMessage,
+        sent_at: new Date().toISOString(),
+      }));
+
+      // Clear the new message input field after sending the message
+      setNewMessage('');
+    } catch (error) {
+      // Handle any errors, log them
+      console.error('Error sending message:', error);
+    }
+  };
+
+  // Helper function to get the sender's name based on the message data
+  const getSenderName = (message) => {
+    // If the sender is the current user, return 'You'
+    if (message.sender_id === userId) {
+      return 'You';
+    } else {
+      // Otherwise, find the sender in the users list and return their name
+      const sender = users.find(user => user.user_id === message.sender_id);
+      return sender ? sender.user_name : 'Other';  // Return the sender's name or 'Other' if not found
+    }
+  };
 
   return (
     <div className="chat">
@@ -138,7 +161,7 @@ function Chat() {
         </div>
         <div className="chat__message--container">
           <div className="chat__messages">
-          {currentRecipientId ? (
+            {currentRecipientId ? (
               messages.map((message, index) => (
                 <div 
                   key={`message-${message.id}-${message.sent_at}-${index}`} // Ensure unique key by combining message id, timestamp, and index
@@ -168,7 +191,7 @@ function Chat() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Chat
+export default Chat;
