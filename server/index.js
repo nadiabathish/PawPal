@@ -1,6 +1,10 @@
 import "dotenv/config";
 import cors from 'cors';
 import express from "express";
+import http from "http";
+import { WebSocketServer } from "ws";
+
+// Import routes
 import authRoutes from "./routes/auth.js";
 import profileRoutes from "./routes/profiles.js";
 import playmatesRoutes from "./routes/playmates.js";
@@ -11,6 +15,9 @@ import notificationsRoutes from "./routes/notifications.js";
 import mutualLikeRoutes from "./routes/mutualLike.js";
 
 const app = express();
+const server = http.createServer(app);
+const wss = new WebSocketServer({ server });
+
 const PORT = process.env.PORT || 8080;
 
 // Middleware - CORS configuration
@@ -31,6 +38,25 @@ app.use("/settings", settingsRoutes);
 app.use("/dog_profiles", dogProfilesRoutes);
 app.use("/notifications", notificationsRoutes);
 app.use("/mutuallike", mutualLikeRoutes);
+
+// Websocket connection
+wss.on("connection", (ws) => {
+  console.log("Client connected");
+
+  ws.on("message", (data) => {
+    const message = JSON.parse(data);
+
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocketServer.OPEN) {
+        client.send(JSON.stringify(message));
+      }
+    });
+  });
+
+  ws.on("close", () => {
+    console.log("Client disconnected");
+  });
+});
 
 // Start server
 app.listen(PORT, () => {
