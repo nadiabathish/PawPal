@@ -55,20 +55,43 @@ router.post('/like', authenticateToken, async (req, res) => {
       })
       .first();
 
-    if (mutualLike) {
-      // Update both entries to matched
-      await knex('matches')
-        .where({ id: mutualLike.id })
-        .update({ status: 'matched' });
+      if (mutualLike) {
+        // Update both entries to matched
+        await knex('matches')
+          .where({ id: mutualLike.id })
+          .update({ status: 'matched' });
+      
+        const [newMatchId] = await knex('matches').insert({
+          user1_id: userId,
+          user2_id: likedUserId,
+          status: 'matched'
+        }).returning('id');
+      
+        // Create a new chat entry linked to this match
+        await knex('chats').insert({
+          match_id: newMatchId,
+          created_at: knex.fn.now(),
+        });
+      
+        return res.status(200).send("It's a match!");
+      }
+      
 
-      await knex('matches').insert({
-        user1_id: userId,
-        user2_id: likedUserId,
-        status: 'matched'
-      });
 
-      return res.status(200).send("It's a match!");
-    }
+      // if (mutualLike) {
+      //   // Update both entries to matched
+      //   await knex('matches')
+      //     .where({ id: mutualLike.id })
+      //     .update({ status: 'matched' });
+
+      //   await knex('matches').insert({
+      //     user1_id: userId,
+      //     user2_id: likedUserId,
+      //     status: 'matched'
+      //   });
+
+      //   return res.status(200).send("It's a match!");
+      // }
 
     // Otherwise, log the like interaction as pending
     await knex('matches').insert({
@@ -144,44 +167,6 @@ router.get("/profile/:userId", authenticateToken, async (req, res) => {
   }
 });
 
-
-
-
-// GET /profile/:userId: - Fetch profile data for a specific user
-// router.get("/profile/:userId", authenticateToken, async (req, res) => {
-//   const { userId } = req.params;
-
-//   try {
-//     const profile = await knex("users")
-//     .where({ id: userId })
-//     .first();
-//     const dogProfile = await knex("dog_profiles")
-//     .where({ owner_id: userId })
-//     .first();
-
-//     if (!profile || !dogProfile) return res.status(404).send("Profile not found");
-
-//     let playStyles = [];
-
-//     if (typeof dogProfile.play_styles === 'string') {
-//       playStyles = dogProfile.play_styles.split(',');
-//     } else if (Array.isArray(dogProfile.play_styles)) {
-//       playStyles = dogProfile.play_styles;
-//     }
-//     res.status(200).json({
-//       email: profile.email,
-//       owner_name: profile.owner_name,
-//       dog_name: dogProfile.dog_name,
-//       dog_age: dogProfile.dog_age,
-//       dog_breed: dogProfile.dog_breed,
-//       play_styles: playStyles,
-//       profile_picture_url: dogProfile.profile_picture_url,
-//     });
-//   } catch (error) {
-//     console.error("Error fetching profile:", error);
-//     res.status(500).send("Error fetching profile");
-//   }
-// });
 
 // PUT /profile/:userId: - Update the user's profile
 router.put("/profile/:userId", authenticateToken, async (req, res) => {
