@@ -2,7 +2,7 @@ import "dotenv/config";
 import cors from 'cors';
 import express from "express";
 import http from "http";
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 
 // Import routes
 import authRoutes from "./routes/auth.js";
@@ -45,9 +45,11 @@ wss.on("connection", (ws) => {
 
   ws.on("message", (data) => {
     const message = JSON.parse(data);
+    console.log("Received message:", message)
 
     wss.clients.forEach((client) => {
-      if (client.readyState === WebSocketServer.OPEN) {
+      if (client.readyState === WebSocket.OPEN) {
+        console.log("Broadcasting message:", message); 
         client.send(JSON.stringify(message));
       }
     });
@@ -59,6 +61,6 @@ wss.on("connection", (ws) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
