@@ -50,6 +50,7 @@ router.post("/signup", async (req, res) => {
       dog_age,
       dog_breed,
       play_styles: JSON.stringify(play_styles), // Convert play_styles to JSON string before saving
+      profile_pictures: "[]", // Initialize profile_pictures as an empty array
       owner_id: userId,
       created_at: knex.fn.now(),
       updated_at: knex.fn.now(),
