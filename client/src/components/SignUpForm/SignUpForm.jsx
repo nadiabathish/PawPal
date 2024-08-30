@@ -16,6 +16,7 @@ function SignUpForm() {
     const [playStyles, setPlayStyles] = useState([]); // State to store selected play styles (as an array)
     const [errorMessage, setErrorMessage] = useState(''); // State to store error messages
     const navigate = useNavigate(); // Hook to programmatically navigate to different routes
+    const [image, setImage] = useState(null);
 
     // Event handler to update the playStyles array when a checkbox is checked/unchecked
     const handlePlayStyleChange = (e) => {
@@ -180,15 +181,16 @@ function SignUpForm() {
                             Quiet Play
                         </label>
                     </div>
-                    <div className="sign-up__field">
-                        <label htmlFor="image">Upload a Photo of Your Pup</label>
-                        <input 
-                            type="file" 
-                            id="image" 
-                            accept="image/*" 
-                            required 
-                        />
-                    </div>
+                </div>
+                <div className="sign-up__field">
+                    <label htmlFor="image">Upload a Photo of Your Pup</label>
+                    <input 
+                        type="file" 
+                        id="image" 
+                        accept="image/*" 
+                        onChange={(e) => setImage(e.target.files[0])}
+                        required 
+                    />
                 </div>
                 <button type="submit" className="sign-up__submit">Create My Pup's Profile</button>
                 {errorMessage && <p className="sign-up__error">{errorMessage}</p>}
