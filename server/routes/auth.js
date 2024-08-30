@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 import authenticateToken from "../middleware/authenticateToken.js";
 // import multer from "multer";
 
+const knex = initKnex(configuration);
+const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 
@@ -39,8 +41,7 @@ function checkFileType(file, cb) {
   }
 }
 
-const knex = initKnex(configuration);
-const router = express.Router();
+
 
 // GET /verify-token - Verify if the JWT token is valid
 router.get('/verify-token', authenticateToken, (req, res) => {
