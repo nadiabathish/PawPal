@@ -179,7 +179,15 @@ function SignUpForm() {
                             />
                             Quiet Play
                         </label>
-                    
+                    </div>
+                    <div className="sign-up__field">
+                        <label htmlFor="image">Upload a Photo of Your Pup</label>
+                        <input 
+                            type="file" 
+                            id="image" 
+                            accept="image/*" 
+                            required 
+                        />
                     </div>
                 </div>
                 <button type="submit" className="sign-up__submit">Create My Pup's Profile</button>
