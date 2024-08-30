@@ -4,6 +4,40 @@ import configuration from "../knexfile.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import authenticateToken from "../middleware/authenticateToken.js";
+// import multer from "multer";
+
+const multer = require('multer');
+const path = require('path');
+
+// Set storage engine
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+// Initialize upload
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 }, // Limit file size to 1MB
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  }
+}).array('profile_pictures', 10); // Allow up to 10 images
+
+// Check file type
+function checkFileType(file, cb) {
+  const filetypes = /jpeg|jpg|png|gif/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb('Error: Images Only!');
+  }
+}
 
 const knex = initKnex(configuration);
 const router = express.Router();
@@ -16,7 +50,7 @@ router.get('/verify-token', authenticateToken, (req, res) => {
 
 
 // POST /signup - Register a new user and their dog profile
-router.post("/signup", async (req, res) => {
+router.post("/signup", upload, async (req, res) => {
   // Extract user and dog information from the request body
   const { email, password, name, dog_name, dog_age, dog_breed, play_styles } = req.body;
 
@@ -44,13 +78,16 @@ router.post("/signup", async (req, res) => {
       updated_at: knex.fn.now(),
     });
 
+    // Get the uploaded file paths
+    const profilePictures = req.files.map(file => file.path);
+
     // Insert the new user's dog profile into the "dog_profiles" table
     await knex("dog_profiles").insert({
       dog_name,
       dog_age,
       dog_breed,
       play_styles: JSON.stringify(play_styles), // Convert play_styles to JSON string before saving
-      profile_pictures: "[]", // Initialize profile_pictures as an empty array
+      profile_pictures: JSON.stringify(profilePictures), // Save file paths as JSON string
       owner_id: userId,
       created_at: knex.fn.now(),
       updated_at: knex.fn.now(),
