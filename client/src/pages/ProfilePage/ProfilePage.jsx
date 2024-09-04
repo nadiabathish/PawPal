@@ -76,7 +76,7 @@ function ProfilePage() {
         <div className="profile-page__dog-profile">
             <h2 className="profile-page__dog-name">{profileData.dog_name}</h2>
             <img
-              src={profileData.profile_picture_url}
+              src={profileData.profile_pictures}
               alt={`${profileData.dog_name}'s profile`}
               className="profile-page__dog-picture"
             />
