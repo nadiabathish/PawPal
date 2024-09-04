@@ -34,6 +34,30 @@ Dog owners often find it challenging to identify suitable playmates for their pe
 
 ---
 
+## Screenshots
+
+- **Homepage**:  
+  This is the landing page where users can log in or sign up.
+  <!-- ![Homepage Screenshot](./screenshots/homepage.png) -->
+
+- **Dog Profile Page**:  
+  Users can create and edit their dog's profile.
+  <!-- ![Dog Profile Screenshot](./screenshots/dog-profile.png) -->
+
+- **Swiping Interface**:  
+  Users can swipe through dog profiles to find potential playmates.
+  <!-- ![Swiping Interface Screenshot](./screenshots/swipe-interface.png) -->
+
+- **Chat Interface**:  
+  Matched users can chat to arrange playdates.
+  <!-- ![Chat Interface Screenshot](./screenshots/chat.png) -->
+
+- **Notifications**:  
+  Users receive notifications when someone likes their dog profile.
+  <!-- ![Notifications Screenshot](./screenshots/notifications.png) -->
+
+---
+
 ## Technologies Used
 ### Frontend:
 - **React.js**: Component-based UI.
