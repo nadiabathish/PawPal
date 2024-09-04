@@ -64,7 +64,7 @@ Dog owners often find it challenging to identify suitable playmates for their pe
 ### Steps to Run Locally:
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-repo/pawpal.git
+   git clone https://github.com/nadiabathish/PawPal.git
    cd pawpal
    ```
 
