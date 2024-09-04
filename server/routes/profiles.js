@@ -2,10 +2,44 @@ import express from "express";
 import initKnex from "knex";
 import configuration from "../knexfile.js";
 import authenticateToken from "../middleware/authenticateToken.js";
+
 const knex = initKnex(configuration);
 const router = express.Router();
 
 
+// GET /profile/:userId - Retrieve user profile data including profile pictures
+router.get('/profile/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Fetch user profile data from the database
+    const userProfile = await knex('users')
+      .join('dog_profiles', 'users.id', 'dog_profiles.owner_id')
+      .select('users.email', 'users.name', 'dog_profiles.*')
+      .where('users.id', userId)
+      .first();
+
+    if (!userProfile) {
+      return res.status(404).send('User not found');
+    }
+
+    // Send the user profile data and image in the response
+    res.status(200).json({
+      email: userProfile.email,
+      owner_name: userProfile.name,
+      dog_name: userProfile.dog_name,
+      dog_age: userProfile.dog_age,
+      dog_breed: userProfile.dog_breed,
+      play_styles: userProfile.play_styles,
+      profile_pictures: userProfile.profile_pictures,
+    });
+  } catch (error) {
+    console.error('Error fetching user profile: ', error);
+    res.status(500).send('Error fetching user profile');
+  }
+});
+
+// GET /matches - Retrieve potential matches for the user
 router.get('/matches', authenticateToken, async (req, res) => {
   const userId = req.user.userId;
 
@@ -34,6 +68,7 @@ router.get('/matches', authenticateToken, async (req, res) => {
   }
 });
 
+// POST /like - Log a like interaction and handle mutual likes
 router.post('/like', authenticateToken, async (req, res) => {
   const userId = req.user.userId;
   const { dogId } = req.body;
@@ -90,6 +125,7 @@ router.post('/like', authenticateToken, async (req, res) => {
   }
 });
 
+// POST /pass - Log a pass interaction as rejected
 router.post('/pass', authenticateToken, async (req, res) => {
   const userId = req.user.userId;
   const { dogId } = req.body;
@@ -100,6 +136,9 @@ router.post('/pass', authenticateToken, async (req, res) => {
 
   try {
     const passedDogProfile = await knex('dog_profiles').where({ id: dogId }).first();
+    if (!passedDogProfile) {
+      return res.status(404).send("Dog profile not found");
+    }
     const passedUserId = passedDogProfile.owner_id;
 
     // Log the pass interaction as rejected
@@ -113,39 +152,6 @@ router.post('/pass', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error("Error passing dog profile: ", error);
     res.status(500).send("Error passing dog profile");
-  }
-});
-
-// GET /profile/:userId - Retrieve user profile data including profile pictures
-router.get('/profile/:userId', async (req, res) => {
-  const { userId } = req.params;
-
-  try {
-    // Fetch user profile data from the database
-    const userProfile = await knex('users')
-      .join('dog_profiles', 'users.id', 'dog_profiles.owner_id')
-      .select('users.email', 'users.name', 'dog_profiles.*')
-      .where('users.id', userId)
-      .first();
-
-    if (!userProfile) {
-      return res.status(404).send('User not found');
-    }
-
-    // Send the user profile data and image in the response
-    res.status(200).json({
-      email: userProfile.email,
-      owner_name: userProfile.name,
-      dog_name: userProfile.dog_name,
-      dog_age: userProfile.dog_age,
-      dog_breed: userProfile.dog_breed,
-      play_styles: userProfile.play_styles,
-      profile_pictures: userProfile.profile_pictures,
-    });
-  } catch (error) {
-    // Log the error and respond with a 500 status if fetching profile data fails
-    console.error('Error fetching user profile: ', error);
-    res.status(500).send('Error fetching user profile');
   }
 });
 
