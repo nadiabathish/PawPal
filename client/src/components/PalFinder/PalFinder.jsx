@@ -112,15 +112,20 @@ function PalFinder() {
 
   return (
     <div className="pal-finder">
-      <h1>Find Your Pup's Next Playdate</h1>
+      <h1 className="pal-finder__title">Find Your Pup's Next Playdate</h1>
       <div className="pal-finder__card">
-        <img src={profilePicture} alt={currentProfile.name} />
-        <h2>{dogName}</h2>
-        <p>{dogAge} years old - {dogBreed}</p>
-        <p>Play Style: {currentProfile.play_styles.join(', ')}</p>
+        <img 
+          className="pal-finder__card-image" 
+          src={profilePicture} 
+          alt={currentProfile.name} 
+        />
+        <h2 className="pal-finder__card-name">{dogName}</h2>
+        <p className="pal-finder__card-age"><b>Age:</b> {dogAge} years old</p>
+        <p className="pal-finder__card-breed"><b>Breed:</b> {dogBreed}</p>
+        <p className="pal-finder__card-playstyle"><b>Play Style:</b> {currentProfile.play_styles.join(', ')}</p>
         <div className="pal-finder__actions">
-          <button onClick={handlePass}>Pass</button>
-          <button onClick={handleLike}>Like</button>
+          <button className="pal-finder__actions-btn pal-finder__actions-btn--pass" onClick={handlePass}>Pass</button>
+          <button className="pal-finder__actions-btn pal-finder__actions-btn--like" onClick={handleLike}>Like</button>
         </div>
       </div>
     </div>
