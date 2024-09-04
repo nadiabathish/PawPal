@@ -149,4 +149,4 @@ Dog owners often find it challenging to identify suitable playmates for their pe
 ---
 
 ## Contributors
-- **Nadia Bathish**: Full-Stack Developer.
+- **Nadia Bathish**: Full-Stack Developer. [LinkedIn](https://www.linkedin.com/in/nadia-bathish/)
