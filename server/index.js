@@ -14,6 +14,7 @@ import dogProfilesRoutes from "./routes/dogProfiles.js";
 import notificationsRoutes from "./routes/notifications.js";
 import mutualLikeRoutes from "./routes/mutualLike.js";
 
+// const express = require('express');
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
@@ -38,6 +39,8 @@ app.use("/settings", settingsRoutes);
 app.use("/dog_profiles", dogProfilesRoutes);
 app.use("/notifications", notificationsRoutes);
 app.use("/mutuallike", mutualLikeRoutes);
+app.use('/uploads', express.static('uploads'));
+
 
 // Websocket connection
 wss.on("connection", (ws) => {

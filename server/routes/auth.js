@@ -4,16 +4,17 @@ import configuration from "../knexfile.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import authenticateToken from "../middleware/authenticateToken.js";
-// import multer from "multer";
+import multer from "multer";
+import path from "path";
 
 const knex = initKnex(configuration);
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
+// const multer = require('multer');
+// const path = require('path');
 
 // Set storage engine
 const storage = multer.diskStorage({
-  destination: './uploads/',
+  destination: '../uploads/',
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
@@ -22,7 +23,7 @@ const storage = multer.diskStorage({
 // Initialize upload
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 }, // Limit file size to 1MB
+  limits: { fileSize: 4000000 }, // Limit file size to 1MB
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   }
